@@ -1,0 +1,13 @@
+# 1) Build con Maven y Java 21
+FROM maven:3.8.6-eclipse-temurin-21 AS builder
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# 2) Imagen ligera para runtime
+FROM eclipse-temurin:21-jre
+WORKDIR /app
+COPY --from=builder /app/target/transporte-api-0.0.1-SNAPSHOT.war ./app.war
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","/app/app.war"]
