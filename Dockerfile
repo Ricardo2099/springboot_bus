@@ -1,5 +1,4 @@
-# 1) Build con Maven y Java 21
-FROM maven:3.8.6-eclipse-temurin-21 AS builder
+FROM maven:3.9.2-openjdk-21-slim AS builder
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
